@@ -1,0 +1,30 @@
+{
+  "name": "mochachai",
+  "version": "1.0.0",
+  "description": "Learn mocha chai js unit testing",
+  "main": "server.js",
+  "scripts": {
+    "test": "mocha",
+    "test:browser": "live-server --port=9000 --mount=/:public"
+  },
+  "keywords": [
+    "js",
+    "unit-testing",
+    "mocha",
+    "chai"
+  ],
+  "author": "shakyavi",
+  "license": "ISC",
+  "dependencies": {
+    "body-parser": "^1.19.0",
+    "chai-http": "^4.3.0",
+    "express": "^4.17.1",
+    "express-promise-router": "^3.0.3",
+    "mocha": "^6.2.1",
+    "mongoose": "^5.7.5"
+  },
+  "devDependencies": {
+    "chai": "^4.2.0",
+    "live-server": "^1.2.1"
+  }
+}

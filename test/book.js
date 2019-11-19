@@ -19,7 +19,7 @@ describe('Books Api', () => {
     describe('#1 /GET book', () => {
         it('it should GET all the books', (done) => {
             chai.request(server)
-                .get('/bookStores/book')
+                .get('/bookStore/book')
                 .end((err, res) => {
                     res.should.have.status(200);
                     res.body.should.be.a('array');

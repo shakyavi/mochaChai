@@ -5,7 +5,7 @@ module.exports = {
     /*
      * GET /book route to retrieve all the books.
      */
-    getBooks(req, res) {
+    getBooks:(req, res) => {
         //Query the DB and if no errors, send all the books
         let query = bookModel.findBook({});
         query.exec((err, books) => {
@@ -63,7 +63,7 @@ module.exports = {
             });
         });
     },
-    async calculateBooksAsset(req,res){
+     calculateBooksAsset : async (req,res)=>{
         let {bookId,qty} = req.body;
         let totalSum = await bookModel.totalAsset();
 

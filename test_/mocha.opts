@@ -1,0 +1,3 @@
+--timeout 10000
+--reporter mochawesome
+--reporter-options timestamp=fullDate,reportTitle=Unit\ Test\ Report,autoOpen=true

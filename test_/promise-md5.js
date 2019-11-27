@@ -25,6 +25,7 @@ describe('#promiseMd5()', function() {
 
             return promiseMd5(12345)
                 .catch(function(err) {
+                    console.log(err);
                     // add an assertion to check the error
                     expect(function() { throw err })
                         .to.throw(TypeError, 'Data must be a string or a buffer');

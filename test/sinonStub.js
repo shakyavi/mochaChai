@@ -2,10 +2,10 @@ var sinon = require('sinon');
 var stub = sinon.stub();
 var axios = require('axios')
 
-stub('hello from stub');
+/*stub('hello from stub');
 
 //console.log(stub);
-console.log(stub.firstCall.args); //output: ['hello']
+console.log(stub.firstCall.args); //output: ['hello']*/
 
 function saveUser(user, callback) {
     axios.post('/users', {

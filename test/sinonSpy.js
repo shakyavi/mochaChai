@@ -4,7 +4,7 @@ let chai = require('chai');
 let assert = chai.assert;
 
 //We can call a spy like a function
-spy('Hello', 'World');
+/*spy('Hello', 'World');
 
 //Now we can get information about the call
 console.log(spy.firstCall.args); //output: ['Hello', 'World']
@@ -26,7 +26,7 @@ console.log(setNameSpy);
 console.log(setNameSpy.callCount); //output: 1
 
 //Important final step - remove the spy
-setNameSpy.restore();
+setNameSpy.restore();*/
 
 function myFunction(condition, callback){
     if(condition){
@@ -41,6 +41,7 @@ describe('myFunction', function() {
         myFunction(true, callback);
 
         assert(callback.calledOnce);
+        //done();
     });
 });
 

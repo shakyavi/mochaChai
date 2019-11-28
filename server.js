@@ -13,9 +13,9 @@ app.use(bodyParser.json({type: 'application/json'}));
 const port = 3001;
 
 mongoose.connect(config.dbConfig.uri, config.dbConfig.options).then((err, client) => {
-    //console.log('connected to db');
+    console.log('We have connected to local db');
 }).catch((error) => {
-    console.log('db connection error');
+    console.log('Local db connection error');
     console.log(error.message);
 });
 

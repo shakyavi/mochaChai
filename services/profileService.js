@@ -1,5 +1,5 @@
-const userModel = customFileLoader.loadModel('users')
-const deviceModel = customFileLoader.loadModel('devices')
+const userModel = require('../models/users')
+/*const deviceModel = customFileLoader.loadModel('devices')
 //const postModel = customFileLoader.loadModel('posts')
 const commentModel = customFileLoader.loadModel('postComments')
 const storyModel = customFileLoader.loadModel('stories')
@@ -13,15 +13,57 @@ const emailService = customFileLoader.loadServices('mailerService');
 const { getTranslation } = customFileLoader.loadHelper('getTranslation');
 const { RESEND_EMAIL_VERIFICATION } = customFileLoader.loadConstants('lang');
 const userSocialContactsModel = customFileLoader.loadModel('userSocialContacts');
-const moment = require('moment');
+const moment = require('moment');*/
 
 module.exports = {
-    verificationEmail: async (data) => {
+    getFriendShipStatus:async (currentUserId, otherUserId)=> {
+        let users = await userModel.count();
+        //let users = await userModel.find({},{_id:1,email:1,contactNumber:1}).limit(5);
+        console.log(users);
+        //get current user filter if other user has requested me or im following
+        let currentUser = await userModel.findOne({_id:currentUserId}, {
+            _id: 1,
+            followRequest: { $elemMatch: { "$eq": otherUserId } },
+            fanFriend: { $elemMatch: { "userId": otherUserId, "isFriend": false } }
+        })
+        console.log(currentUser,currentUserId,typeof currentUserId);
+        if(!currentUser){
+            throw new Error('invalid current user id');
+        }
+        //check if other user has requested current user
+        let friendRequest = (currentUser.followRequest.length > 0) ? true : false
+        let follow = 'not-requested'
+        //other user
+        let otherUser = await userModel.findOne({ _id: otherUserId }, {
+            _id: 1,
+
+            followRequest: { $elemMatch: { "$eq": currentUserId } },
+            fanFriend: { $elemMatch: { "userId": currentUserId } }
+        })
+        if (otherUser.followRequest.length > 0) {
+            follow = "requested"
+        } else if (otherUser.fanFriend.length > 0) {
+            //check if other user is my fan or friend
+            follow = (otherUser.fanFriend[0].isFriend) ? "friend" : "fan"
+            //check fan friend
+        } else {
+            if (currentUser.fanFriend.length > 0) {
+                follow = 'following'
+            }
+
+        }
+        let response = {
+            follow,
+            friendRequest
+        }
+        return response
+    },
+    /*verificationEmail: async (data) => {
 
         let verificationUniqueId = uuidv1();//unique id for verification email
         let httpCode = "";
         let msg = "";
-        
+
         //if user not verified then send email
         let verification_link = config.siteInformation.siteUrl + "v1/user/verifyEmail/" + verificationUniqueId;
         //send verification email
@@ -127,44 +169,6 @@ module.exports = {
 
         }
     },
-    getFriendShipStatus:async (currentUserId, otherUserId)=> {
-        //get current user filter if other user has requested me or im following
-        let currentUser = await userModel.findById(currentUserId, {
-            _id: 1,
-            followRequest: { $elemMatch: { "$eq": otherUserId } },
-            fanFriend: { $elemMatch: { "userId": otherUserId, "isFriend": false } }
-        })
-        if(!currentUser){
-            throw new Error('invalid current user id');
-        }
-        //check if other user has requested current user
-        let friendRequest = (currentUser.followRequest.length > 0) ? true : false
-        let follow = 'not-requested'
-        //other user
-        let otherUser = await userModel.findOne({ _id: otherUserId }, {
-            _id: 1,
-
-            followRequest: { $elemMatch: { "$eq": currentUserId } },
-            fanFriend: { $elemMatch: { "userId": currentUserId } }
-        })
-        if (otherUser.followRequest.length > 0) {
-            follow = "requested"
-        } else if (otherUser.fanFriend.length > 0) {
-            //check if other user is my fan or friend
-            follow = (otherUser.fanFriend[0].isFriend) ? "friend" : "fan"
-            //check fan friend
-        } else {
-            if (currentUser.fanFriend.length > 0) {
-                follow = 'following'
-            }
-
-        }
-        let response = {
-            follow,
-            friendRequest
-        }
-        return response
-    },
     //get ohter users post visibility while viewing profile
     getOtherUsersPostVisibility: async(currentUserId,otherUserId)=>{
         let postVisibility= ['public']
@@ -268,7 +272,7 @@ module.exports = {
         } catch (e) {
             console.log('user model delete error : ', e);
         }
-    }
+    }*/
     /*getFollowStatus: async (currentUserId, otherUserId) => {
 
         let follow = 'not-requested'

@@ -1,0 +1,6 @@
+--require ./test/setup
+--ui bdd
+--globals global
+--timeout 10000
+--reporter mochawesome
+--reporter-options timestamp=fullDate,reportTitle=GoChat\ Unit\ Test\ Report,autoOpen=true

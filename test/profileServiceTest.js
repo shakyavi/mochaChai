@@ -11,10 +11,13 @@ before(function (done) {
     let dbUri = `${global.DB_DRIVER}+srv://${global.DB_USER}:${global.PASSWORD}@${global.DB_HOST}/${global.DB_DATABASE}?retryWrites=true`;
 
     mongoose.connect(dbUri, global.dbConfig.options).then((err, client) => {
-        console.log('we\'re connected to the database!');
+        if(err){
+            console.log('connection error ',err);
+        }
+        console.log('\n WE\'re CONNECTED TO THE DATABASE! \n');
         done();
     }).catch((error) => {
-        console.log('connection error:', error.message);
+        console.log('\n DB connection ERROR :\n', error.message);
     });
     //END OF DB CONNECTION
 });
@@ -25,8 +28,8 @@ describe('Profile Services', () => {
 
         it('#a it should return an object with keys {follow} and {friendRequest}',
             async () => {
-                let currentUserId = mongoose.Types.ObjectId("5d76221269d1281e44728f86");
-                let otherUserId = mongoose.Types.ObjectId("5d761ef652aafb1a59822212");
+                let currentUserId = mongoose.Types.ObjectId("5d722de65bfb961c3c003127");
+                let otherUserId = mongoose.Types.ObjectId("5d76242c69d1281e44728f94");
                 // return  profileService.getFriendShipStatus(currentUserId, otherUserId);
 
                 let friendShipStatus = await profileService.getFriendShipStatus(currentUserId, otherUserId);

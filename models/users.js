@@ -110,7 +110,9 @@ userSchema.virtual("fullName").get(function () {
     return this.firstName + " " + this.lastName
 })
 
-
+userSchema.statics.saveUser = async function (user) {
+    // console.log('save user from model ',user);
+};
 const users = mongoose.model("users", userSchema);
 
 module.exports = users

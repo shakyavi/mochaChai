@@ -11,9 +11,9 @@ before(function (done) {
     let dbUri = `${global.DB_DRIVER}+srv://${global.DB_USER}:${global.PASSWORD}@${global.DB_HOST}/${global.DB_DATABASE}?retryWrites=true`;
 
     mongoose.connect(dbUri, global.dbConfig.options).then((err, client) => {
-        if(err){
+        /*if(err){
             console.log('connection error ',err);
-        }
+        }*/
         console.log('\n WE\'re CONNECTED TO THE DATABASE! \n');
         done();
     }).catch((error) => {

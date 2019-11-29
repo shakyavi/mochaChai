@@ -8,7 +8,7 @@ var axios = require('axios')
 console.log(stub.firstCall.args); //output: ['hello']*/
 
 function saveUser(user, callback) {
-    axios.post('/users', {
+    axios.post('/usersx', {
         first: user.firstname,
         last: user.lastname
     }, callback);
